@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+#nullable enable
+
 namespace ProductionSystem
 {
 	/// <summary>
@@ -10,7 +12,7 @@ namespace ProductionSystem
 	/// </summary>
 	public class T0G
 	{
-		private List<Tuple<string, string>> prods { get; set; }
+		private List<List<(string LHS, string RHS)>> prods { get; set; }
 
 		private StringBuilder? config { get; set; }
 
@@ -20,11 +22,11 @@ namespace ProductionSystem
 		/// </summary>
 		public T0G()
 		{
-			prods = new List<Tuple<string, string>>();
-			prods.Add(new Tuple<string, string>("S", "Sa"));
-			prods.Add(new Tuple<string, string>("S", "aAb"));
-			prods.Add(new Tuple<string, string>("A", "aA"));
-			prods.Add(new Tuple<string, string>("A", "a"));
+			prods = new List<List<(string LHS, string RHS)>>();
+			prods.Add(new List<(string LHS, string RHS)>() { ("S", "Sa") });
+			prods.Add(new List<(string LHS, string RHS)>() { ("S", "aAb") });
+			prods.Add(new List<(string LHS, string RHS)>() { ("A", "aA") });
+			prods.Add(new List<(string LHS, string RHS)>() { ("A", "a") } );
 			config = new StringBuilder("S");
 		}
 
@@ -34,7 +36,7 @@ namespace ProductionSystem
 		/// </summary>
 		/// <param name="prods"></param>
 		/// <param name="config"></param>
-		public T0G(List<Tuple<string, string>> prods, StringBuilder config)
+		public T0G(List<List<(string LHS, string RHS)>> prods, StringBuilder config)
 		{
 			this.prods = prods;
 			this.config = config;
@@ -47,7 +49,7 @@ namespace ProductionSystem
 		/// <param name="cfg">The current grammar configuraton</param>
 		/// <param name="index">The index of the symbol on the grammar to be substituted</param>
 		/// <returns>Returns true if the production can be applied to the configuation, false otherwise.</returns>
-		private bool? canApplyProd(Tuple<string, string> prod, StringBuilder cfg, int index)
+		private bool? canApplyProd((string LHS, string RHS) prod, StringBuilder cfg, int index)
 		{
 			try
 			{
@@ -58,7 +60,7 @@ namespace ProductionSystem
 
 				Char[] cfgCharArrray = cfg.ToString().ToCharArray();
 				int i = index;
-				foreach (var c in prod.Item1)
+				foreach (var c in prod.LHS)
 				{
 					if (cfgCharArrray[i] != c)
 						return false;
@@ -84,14 +86,14 @@ namespace ProductionSystem
 		/// Returns the transformed configuration after applying the production, or returns null if
 		/// there was an exception
 		/// </returns>
-		private StringBuilder? applyProd(Tuple<string, string> prod, StringBuilder? cfg, int index)
+		private StringBuilder? applyProd((string LHS, string RHS) prod, StringBuilder? cfg, int index)
 		{
 			try
 			{
 				if (cfg is StringBuilder)
 				{
-					cfg.Remove(index, prod.Item1.Length);
-					cfg.Insert(index, prod.Item2);
+					cfg.Remove(index, prod.LHS.Length);
+					cfg.Insert(index, prod.RHS);
 					return cfg;
 				}
 				else
@@ -115,7 +117,7 @@ namespace ProductionSystem
 		/// <param name="prod">The  production to be used in the test</param>
 		/// <param name="cfg">The configuration that is to be tested against</param>
 		/// <returns>A list of all applicable indicies the lhs can be applied to the cfg</returns>
-		private List<int>? getListOfApplicableIndices(Tuple<string, string> prod, StringBuilder? cfg)
+		private List<int>? getListOfApplicableIndices((string LHS, string RHS) prod, StringBuilder? cfg)
 		{
 			// TODO : Finish getListOfApplicableIndices
 			try
@@ -124,7 +126,7 @@ namespace ProductionSystem
 
 				if (cfg is StringBuilder)
 				{
-					for (int i = 0; i < cfg.Length - prod.Item1.Length; i++)
+					for (int i = 0; i < cfg.Length - prod.LHS.Length; i++)
 					{
 						bool? canApply = canApplyProd(prod, cfg, i);
 						if (canApply is bool)
@@ -154,11 +156,11 @@ namespace ProductionSystem
 		/// <param name="prods">A list of productions</param>
 		/// <param name="cfg">A grammar configuration</param>
 		/// <returns>All applicable productions.  Returns null if there is an exception.</returns>
-		private List<Tuple<string, string, int>>? allApplicableProductions(List<Tuple<string, string>> prods, StringBuilder? cfg)
+		private List<(string LHS, string RHS, int Index)>? allApplicableProductions(List<(string LHS, string RHS)> prods, StringBuilder? cfg)
 		{
 			try
 			{
-				var ret_value = new List<Tuple<string, string, int>>();
+				var ret_value = new List<(string LHS, string RHS, int Index)>();
 
 				if (cfg is StringBuilder)
 				{
@@ -170,7 +172,7 @@ namespace ProductionSystem
 						{
 							foreach (var i in applicableIndicies)
 							{
-								ret_value.Add(new Tuple<string, string, int>(p.Item1, p.Item2, i));
+								ret_value.Add( (p.LHS, p.RHS, i) );
 							}
 						}
 					}
@@ -195,9 +197,9 @@ namespace ProductionSystem
 				{
 					Console.WriteLine(config.ToString());
 
-					if (canApplyProd(prods[0], config, 0) is bool)
+					if (canApplyProd(prods[0][0], config, 0) is bool)
 					{
-						config = applyProd(prods[0], config, 0);
+						config = applyProd(prods[0][0], config, 0);
 						if (config is StringBuilder)
 							Console.WriteLine(config.ToString());
 					}
