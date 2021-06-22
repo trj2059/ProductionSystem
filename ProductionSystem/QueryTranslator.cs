@@ -6,9 +6,9 @@ using System.Text;
 
 namespace ProductionSystem
 {
+    //https://docs.microsoft.com/en-us/archive/blogs/mattwar/linq-building-an-iqueryable-provider-part-ii
     internal class QueryTranslator : ExpressionVisitor
     {
-
         StringBuilder sb;
 
         internal QueryTranslator()
