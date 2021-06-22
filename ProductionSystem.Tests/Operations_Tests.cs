@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using ProductionSystem.ProductionOperations;
 using Xunit;
 
+#nullable enable
+
 namespace ProductionSystem.Tests
 {
     public class Operations_Tests
@@ -38,12 +40,19 @@ namespace ProductionSystem.Tests
 				if (config is StringBuilder)
 				{
 					Console.WriteLine(config.ToString());
-
-					if (Operations.canApplyProd(prods[0][0], config, 0) is bool)
+					var canApply = Operations.canApplyProd(prods[0][0], config, 0);
+					if (canApply is bool)
 					{
-						config = Operations.applyProd(prods[0][0], config, 0);
-						if (config is StringBuilder)
-							return config;
+						if ((bool)canApply)
+						{
+							config = Operations.applyProd(prods[0][0], config, 0);
+							if (config is StringBuilder)
+								return config;
+						}
+						else
+                        {
+							throw new Exception("Cannot apply production");
+						}
 					}
 					else
 					{
