@@ -189,7 +189,7 @@ namespace ProductionSystem
 			}
 		}
 
-		public void Test1()
+		public StringBuilder? Test1()
 		{
 			try
 			{
@@ -201,7 +201,7 @@ namespace ProductionSystem
 					{
 						config = applyProd(prods[0][0], config, 0);
 						if (config is StringBuilder)
-							Console.WriteLine(config.ToString());
+							return config;
 					}
 					else
 					{
@@ -212,11 +212,12 @@ namespace ProductionSystem
 				{
 					throw new Exception("config is null");
 				}
-
+				return null;
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.ToString());
+				return null;
 			}
 		}
 	}
