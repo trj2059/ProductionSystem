@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ProductionSystem.Exceptions;
 
 #nullable enable
-
 
 namespace ProductionSystem.ProductionOperations
 {
@@ -21,9 +21,9 @@ namespace ProductionSystem.ProductionOperations
 			try
 			{
 				if (index < 0)
-					throw new Exception("Index less than 0");
-				if (index > cfg.Length - 1)
-					throw new Exception("Index greater than cfg length");
+					throw new IndexLessThanZeroException();
+				if (index > cfg.Length - 1)					
+					throw new IndexGreaterThanCfgLengthException();
 
 				Char[] cfgCharArrray = cfg.ToString().ToCharArray();
 				int i = index;
