@@ -4,7 +4,12 @@ using System.Text;
 
 namespace ProductionSystem.Exceptions
 {
-    class CfgIsNullException
+    public class CfgIsNullException : AbstractProductionBaseException
     {
+        public CfgIsNullException()
+            : base("Cfg is null.")
+        {
+
+        }
     }
 }
