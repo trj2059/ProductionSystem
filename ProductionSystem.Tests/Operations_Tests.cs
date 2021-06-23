@@ -16,10 +16,10 @@ namespace ProductionSystem.Tests
 
         private StringBuilder? config { get; set; }
 
-        public Operations_Tests()
-        {
-            prods = new List<List<(string LHS, string RHS)>>();
-            prods.Add(new List<(string LHS, string RHS)>() { ("S", "Sa") });
+		public Operations_Tests()
+		{
+			prods = new List<List<(string LHS, string RHS)>>();
+			prods.Add(new List<(string LHS, string RHS)>() { ("S", "Sa") , ("b", "Cd") });
             prods.Add(new List<(string LHS, string RHS)>() { ("S", "aAb") });
             prods.Add(new List<(string LHS, string RHS)>() { ("A", "aA") });
             prods.Add(new List<(string LHS, string RHS)>() { ("A", "a") });
@@ -33,7 +33,34 @@ namespace ProductionSystem.Tests
 			Assert.NotNull(result);
         }
 
-        private StringBuilder? Test1_Helper()
+		[Fact]
+		public void Operations_getListOfApplicableIndices_Test_1()
+        {
+			StringBuilder cfg = new StringBuilder("aSA");
+			var result = Operations.getListOfApplicableIndices(prods[0][0], cfg);
+			if (result is List<int>)
+			{
+				Assert.True(result.Count == 1);
+			}
+			else
+				Assert.True(false);
+        }
+
+		[Fact]
+		public void Operations_allApplicableProductions_Test_2()
+        {
+			StringBuilder cfg = new StringBuilder("aSbSSa");
+			var result = Operations.allApplicableProductions(prods[0], cfg);
+			if (result is List<(string LHS, string RHS, int Index)>)
+			{
+				Assert.True(result.Count == 4);
+			}
+			else
+				Assert.True(false);				
+        }
+
+
+		private StringBuilder? Test1_Helper()
         {
 			try
 			{
