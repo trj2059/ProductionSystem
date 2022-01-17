@@ -96,10 +96,10 @@ namespace ProductionSystem.ProductionOperations
         /// <param name="prods">A list of productions</param>
         /// <param name="cfg">A grammar configuration</param>
         /// <returns>All applicable productions.  Returns null if there is an exception.</returns>
-        public static List<(string LHS, string RHS, int Index)>? allApplicableProductions(List<(string LHS, string RHS)> prods, StringBuilder? cfg)
+        public static List<(string LHS, string RHS, int Index)>? allApplicableProductions(List<(string LHS, string RHS)> prods, 
+                                                                                          StringBuilder? cfg)
         {
-            var ret_value = new List<(string LHS, string RHS, int Index)>();
-
+            var ret_value = new List<(string LHS, string RHS, int Index)>();             
             if (cfg is StringBuilder)
             {
                 foreach (var p in prods)
