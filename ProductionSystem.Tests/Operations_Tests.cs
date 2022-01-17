@@ -17,18 +17,18 @@ namespace ProductionSystem.Tests
 
         private StringBuilder? config { get; set; }
 
-		public Operations_Tests()
-		{
-			// TODO : Something is wrong here...
-			// We need to place some restrictions on prductions..
-			// the List of Lists may not work.  
-			// I think we can get away with on list of productions.
-			// ...
-			// 
-			prods = new List<(string LHS, string RHS)>();
-			prods.Add(("S", "Sa"));
+        public Operations_Tests()
+        {
+            // TODO : Something is wrong here...
+            // We need to place some restrictions on prductions..
+            // the List of Lists may not work.  
+            // I think we can get away with on list of productions.
+            // ...
+            // 
+            prods = new List<(string LHS, string RHS)>();
+            prods.Add(("S", "Sa"));
             prods.Add(("S", "aAb"));
-			prods.Add(("b", "aS"));
+            prods.Add(("b", "aS"));
             prods.Add(("A", "aA"));
             prods.Add(("A", "a"));
             config = new StringBuilder("S");
@@ -37,94 +37,94 @@ namespace ProductionSystem.Tests
         [Fact]
         public void Operations_Test1()
         {
-			var result = Test1_Helper();
-			Assert.NotNull(result);
+            var result = Test1_Helper();
+            Assert.NotNull(result);
         }
 
-		[Fact]
-		public void Operations_getListOfApplicableIndices_Test_1()
+        [Fact]
+        public void Operations_getListOfApplicableIndices_Test_1()
         {
-			StringBuilder cfg = new StringBuilder("aSA");
-			var result = Operations.getListOfApplicableIndices(prods[0], cfg);
-			if (result is List<int>)
-			{
-				Assert.True(result.Count == 1);
-			}
-			else
-				Assert.True(false); // TODO : What should the message be?
-
-			if(result is List<int>)
+            StringBuilder cfg = new StringBuilder("aSA");
+            var result = Operations.getListOfApplicableIndices(prods[0], cfg);
+            if (result is List<int>)
             {
-				Assert.True(result[0] == 1);
+                Assert.True(result.Count == 1);
             }
-			else
-				Assert.True(false); // TODO : What should the message be?
+            else
+                Assert.True(false); // TODO : What should the message be?
 
-		}
+            if (result is List<int>)
+            {
+                Assert.True(result[0] == 1);
+            }
+            else
+                Assert.True(false); // TODO : What should the message be?
 
-		[Fact]
-		public void Operations_allApplicableProductions_Test_2()
+        }
+
+        [Fact]
+        public void Operations_allApplicableProductions_Test_2()
         {
-			StringBuilder cfg = new StringBuilder("Sb");
-			var result = Operations.allApplicableProductions(prods, cfg);
-			if (result is List<(string LHS, string RHS, int Index)>)
-			{
-				Assert.True(result.Count == 2);
-			}
-			else
-				Assert.True(false); // TODO : What should the message be?
+            StringBuilder cfg = new StringBuilder("Sb");
+            var result = Operations.allApplicableProductions(prods, cfg);
+            if (result is List<(string LHS, string RHS, int Index)>)
+            {
+                Assert.True(result.Count == 2);
+            }
+            else
+                Assert.True(false); // TODO : What should the message be?
 
-			if (result is List<(string LHS, string RHS, int Index)>)
-			{
-				Assert.Equal("S",result[0].LHS);
-				Assert.Equal("Sa",result[0].RHS);
+            if (result is List<(string LHS, string RHS, int Index)>)
+            {
+                Assert.Equal("S", result[0].LHS);
+                Assert.Equal("Sa", result[0].RHS);
 
-				Assert.Equal("S",result[1].LHS);
-				Assert.Equal("aAb",result[1].RHS);				
-			}
-			else
-				Assert.True(false); // TODO : What should the message be?
+                Assert.Equal("S", result[1].LHS);
+                Assert.Equal("aAb", result[1].RHS);
+            }
+            else
+                Assert.True(false); // TODO : What should the message be?
 
-		}
+        }
 
 
-		private StringBuilder? Test1_Helper()
+        private StringBuilder? Test1_Helper()
         {
-			try
-			{
-				if (config is StringBuilder)
-				{
-					Debug.WriteLine(config.ToString());
-					var canApply = Operations.canApplyProd(prods[0], config, 0);
-					if (canApply is bool)
-					{
-						if ((bool)canApply)
-						{
-							config = Operations.applyProd(prods[0], config, 0);
-							if (config is StringBuilder)
-								return config;
-						}
-						else
+            try
+            {
+                if (config is StringBuilder)
+                {
+                    Debug.WriteLine(config.ToString());
+                    var canApply = Operations.canApplyProd(prods[0], config, 0);
+                    if (canApply is bool)
+                    {
+                        if ((bool)canApply)
                         {
-							throw new Exception("Cannot apply production");
-						}
-					}
-					else
-					{
-						throw new Exception("Cannot apply production");
-					}
-				}
-				else
-				{
-					throw new Exception("config is null");
-				}
-				return null;
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.ToString());
-				return null;
-			}
-		}
+                            config = Operations.applyProd(prods[0], config, 0);
+                            if (config is StringBuilder)
+                                return config;
+                        }
+                        else
+                        {
+                            throw new Exception("Cannot apply production");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Cannot apply production");
+                    }
+                }
+                else
+                {
+                    throw new Exception("config is null");
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return null;
+            }
+        }
     }
 }
