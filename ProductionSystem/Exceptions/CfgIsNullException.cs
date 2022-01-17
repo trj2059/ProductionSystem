@@ -4,10 +4,13 @@ using System.Text;
 
 namespace ProductionSystem.Exceptions
 {
+    /// <summary>
+    /// Configuration is null exception.
+    /// </summary>
     public class CfgIsNullException : AbstractProductionBaseException
     {
         public CfgIsNullException()
-            : base("Cfg is null.")
+            : base("The configuration is null is null.")
         {
 
         }

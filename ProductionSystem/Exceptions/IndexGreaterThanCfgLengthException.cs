@@ -6,7 +6,7 @@ namespace ProductionSystem.Exceptions
 {
     public class IndexGreaterThanCfgLengthException : AbstractProductionBaseException
     {
-        public IndexGreaterThanCfgLengthException() : base("Index greater than cfg length")
+        public IndexGreaterThanCfgLengthException() : base("Index greater than cfg length.")
         {
 
         }

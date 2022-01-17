@@ -13,18 +13,30 @@ namespace ProductionSystem.Tests
 {
     public class Operations_Tests
     {
+        /// <summary>
+        /// The list of productions, where LHS stands for "Left Hand Side", and
+        /// RHS stands for "Right Hand Side"
+        /// Productions are, for example of the form:
+        /// 
+        ///  S -> aSa
+        ///  
+        /// </summary>
         private List<(string LHS, string RHS)> prods { get; set; }
 
+        /// <summary>
+        /// TODO: find the Automata book that talks about the configuration
+        ///       the wikipedia article doesn't explain this
+        /// </summary>
         private StringBuilder? config { get; set; }
 
+        /// <summary>
+        /// Initalize the production set, and the current configuration.
+        /// See the wikipedia article to make sense of this
+        /// https://en.wikipedia.org/wiki/Production_(computer_science)
+        /// </summary>
         public Operations_Tests()
         {
-            // TODO : Something is wrong here...
-            // We need to place some restrictions on prductions..
-            // the List of Lists may not work.  
-            // I think we can get away with on list of productions.
-            // ...
-            // 
+            
             prods = new List<(string LHS, string RHS)>();
             prods.Add(("S", "Sa"));
             prods.Add(("S", "aAb"));
@@ -34,13 +46,22 @@ namespace ProductionSystem.Tests
             config = new StringBuilder("S");
         }
 
+        /// <summary>
+        /// Simple test to see if some basic functionality is working.
+        /// This code should never break.
+        /// TODO: Give this a better name.
+        /// </summary>
         [Fact]
         public void Operations_Test1()
         {
             var result = Test1_Helper();
             Assert.NotNull(result);
         }
-
+        
+        /// <summary>
+        /// Testing to see if we get the correct indicies where
+        /// we can apply the productions
+        /// </summary>
         [Fact]
         public void Operations_getListOfApplicableIndices_Test_1()
         {
@@ -48,6 +69,7 @@ namespace ProductionSystem.Tests
             var result = Operations.getListOfApplicableIndices(prods[0], cfg);
             if (result is List<int>)
             {
+                // there is only one applicable production.
                 Assert.True(result.Count == 1);
             }
             else
@@ -55,6 +77,7 @@ namespace ProductionSystem.Tests
 
             if (result is List<int>)
             {
+                // here we verify that the indici is correct.
                 Assert.True(result[0] == 1);
             }
             else
@@ -62,6 +85,10 @@ namespace ProductionSystem.Tests
 
         }
 
+        /// <summary>
+        /// This test is the same as test1, except we test to be sure the
+        /// results are accurate
+        /// </summary>
         [Fact]
         public void Operations_allApplicableProductions_Test_2()
         {
@@ -87,7 +114,9 @@ namespace ProductionSystem.Tests
 
         }
 
-
+        /// <summary>
+        /// TODO: Rename this something appropriate
+        /// </summary>        
         private StringBuilder? Test1_Helper()
         {
             try
@@ -95,9 +124,11 @@ namespace ProductionSystem.Tests
                 if (config is StringBuilder)
                 {
                     Debug.WriteLine(config.ToString());
+                    // Can we apply production 0 to the current configuration at index 0.
                     var canApply = Operations.canApplyProd(prods[0], config, 0);
                     if (canApply is bool)
                     {
+                        // if so apply the production and return the new updated configuration
                         if ((bool)canApply)
                         {
                             config = Operations.applyProd(prods[0], config, 0);

@@ -6,7 +6,7 @@ namespace ProductionSystem.Exceptions
 {
     public class IndexLessThanZeroException : AbstractProductionBaseException
     {
-        public IndexLessThanZeroException() : base("Index less than 0")
+        public IndexLessThanZeroException() : base("Index less than 0.")
         {
 
         }

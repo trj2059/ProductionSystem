@@ -4,10 +4,12 @@ using System.Text;
 
 namespace ProductionSystem.Exceptions
 {
+    /// <summary>    
+    /// </summary>
     public class CanApplyProdoductionReturnedNullException : AbstractProductionBaseException
     {
         public CanApplyProdoductionReturnedNullException()
-            : base("canApplyProd returned null")
+            : base("canApplyProdduction returned null")
         {
 
         }
