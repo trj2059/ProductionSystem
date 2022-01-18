@@ -131,6 +131,43 @@ namespace ProductionSystem.Tests
         }
 
         /// <summary>
+        /// Same as test 2 but with a different configuration.        
+        /// </summary>        
+        [Fact]
+        public void Operations_allApplicableProductions_Test_3()
+        {
+            StringBuilder cfg = new StringBuilder("aSbAs");
+
+            var result = Operations.allApplicableProductions(prods, cfg);
+            if (result is List<(string LHS, string RHS, int Index)>)
+            {
+                Assert.True(result.Count == 5);
+            }
+            else
+                Assert.True(false); // TODO : What should the message be?
+
+            if (result is List<(string LHS, string RHS, int Index)>)
+            {
+                Assert.Equal("S", result[0].LHS);
+                Assert.Equal("Sa", result[0].RHS);
+
+                Assert.Equal("S", result[1].LHS);
+                Assert.Equal("aAb", result[1].RHS);
+
+                Assert.Equal("b", result[2].LHS);
+                Assert.Equal("aS", result[2].RHS);
+
+                Assert.Equal("A", result[3].LHS);
+                Assert.Equal("aA", result[3].RHS);
+
+                Assert.Equal("A", result[4].LHS);
+                Assert.Equal("a", result[4].RHS);
+            }
+            else
+                Assert.True(false); // TODO : What should the message be?
+        }
+
+        /// <summary>
         /// TODO: Rename this something appropriate
         /// </summary>        
         private StringBuilder? Test1_Helper()
