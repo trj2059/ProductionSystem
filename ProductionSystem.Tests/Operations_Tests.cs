@@ -62,8 +62,7 @@ namespace ProductionSystem.Tests
         }
 
         /// <summary>
-        /// Simple test to see if some basic functionality is working.
-        /// This code should never break.
+        /// Simple test to see if some basic functionality is working.        
         /// TODO: Give this a better name.
         /// </summary>
         [Fact]
@@ -73,22 +72,45 @@ namespace ProductionSystem.Tests
             Assert.NotNull(result);
         }
         
+        [Fact]
+        public void Operations_canApplyProduction_Test_1()
+        {
+            config = new StringBuilder("aSSSb");
+            prods = new List<(string LHS, string RHS)>();
+            prods.Add(("Sb", "Sa"));
+            var result = Operations.canApplyProd(prods[0], config, 3);
+            if (result is bool)
+                if ((bool)result)
+                    Assert.True(true);
+                else
+                    Assert.True(false);
+            else
+                Assert.True(false, "No result returned");
+        }
+
         /// <summary>
         /// Testing to see if we get the correct indicies where
         /// we can apply the productions
         /// </summary>
         [Fact]
         public void Operations_getListOfApplicableIndices_Test_1()
-        {
-            StringBuilder cfg = new StringBuilder("aSA");
-            var result = Operations.getListOfApplicableIndices(prods[0], cfg);
+        {     
+            prods = new List<(string LHS, string RHS)>();
+            prods.Add(("S", "Sa"));
+            prods.Add(("S", "aAb"));
+            prods.Add(("b", "aS"));
+            prods.Add(("A", "aA"));
+            prods.Add(("A", "a"));
+            config = new StringBuilder("aSA");
+
+            var result = Operations.getListOfApplicableIndices(prods[0], config);
             if (result is List<int>)
             {
                 // there is only one applicable production.
                 Assert.True(result.Count == 1);
             }
             else
-                Assert.True(false); // TODO : What should the message be?
+                Assert.True(false, "Failed to get result");
 
             if (result is List<int>)
             {
@@ -96,7 +118,34 @@ namespace ProductionSystem.Tests
                 Assert.True(result[0] == 1);
             }
             else
-                Assert.True(false); // TODO : What should the message be?
+                Assert.True(false, "Failed to get result");
+
+        }
+
+        [Fact]
+        public void Operations_getListOfApplicableIndicies_Test_2()
+        {
+            config = new StringBuilder("aSSSb");
+            prods = new List<(string LHS, string RHS)>();
+            prods.Add(("Sb", "Sa"));
+
+            var result = Operations.getListOfApplicableIndices(prods[0], config);
+            if (result is List<int>)
+            {
+                // there is only one applicable production.
+                Assert.True(result.Count == 1);
+            }
+            else
+                Assert.True(false, "Failed to get result");
+
+            if (result is List<int>)
+            {
+                // here we verify that the indici is correct.
+                Assert.True(result[0] == 3);
+            }
+            else
+                Assert.True(false, "Failed to get result");
+
 
         }
 
@@ -111,10 +160,10 @@ namespace ProductionSystem.Tests
             var result = Operations.allApplicableProductions(prods, cfg);
             if (result is List<(string LHS, string RHS, int Index)>)
             {
-                Assert.True(result.Count == 2);
+                Assert.True(result.Count == 3);
             }
             else
-                Assert.True(false); // TODO : What should the message be?
+                Assert.True(false, "Failed to get result");
 
             if (result is List<(string LHS, string RHS, int Index)>)
             {
@@ -123,9 +172,12 @@ namespace ProductionSystem.Tests
 
                 Assert.Equal("S", result[1].LHS);
                 Assert.Equal("aAb", result[1].RHS);
+
+                Assert.Equal("b", result[2].LHS);
+                Assert.Equal("aS", result[2].RHS);
             }
             else
-                Assert.True(false); // TODO : What should the message be?
+                Assert.True(false, "Failed to get result");
 
         }
 
@@ -143,7 +195,7 @@ namespace ProductionSystem.Tests
                 Assert.True(result.Count == 5);
             }
             else
-                Assert.True(false); // TODO : What should the message be?
+                Assert.True(false, "Failed to get result");
 
             if (result is List<(string LHS, string RHS, int Index)>)
             {
@@ -163,7 +215,30 @@ namespace ProductionSystem.Tests
                 Assert.Equal("a", result[4].RHS);
             }
             else
-                Assert.True(false); // TODO : What should the message be?
+                Assert.True(false, "Failed to get result");
+        }
+
+        /// <summary>
+        /// Same as test3 but with a different production set.
+        /// </summary>
+        [Fact]
+        public void Operations_allApplicableProductions_Test_4()
+        {
+            config = new StringBuilder("aSSSb");
+            prods = new List<(string LHS, string RHS)>();
+            prods.Add(("Sb", "Sa"));
+            prods.Add(("S", "aAb"));
+            prods.Add(("bA", "aS"));
+            prods.Add(("A", "aA"));
+            prods.Add(("A", "a"));
+
+            var result = Operations.allApplicableProductions(prods, config);
+            if (result is List<(string LHS, string RHS, int Index)>)
+            {
+                Assert.True(result.Count == 4);
+            }
+            else
+                Assert.True(false,"Failed to get result"); 
         }
 
         /// <summary>

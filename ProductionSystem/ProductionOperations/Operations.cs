@@ -37,15 +37,16 @@ namespace ProductionSystem.ProductionOperations
             if (index > cfg.Length - 1)
                 throw new IndexGreaterThanCfgLengthException();
 
-            Char[] cfgCharArrray = cfg.ToString().ToCharArray();
-            int i = index;
-            foreach (var c in prod.LHS)
+            // TODO: Implement a faster algorithim if possible.  Converting to an array may be slow.            
+            Char[] cfgCharArray = cfg.ToString().ToCharArray();
+            Char[] prodLHSArray = prod.LHS.ToString().ToCharArray();
+            int i = 0;
+            for (int j = index; j < (prodLHSArray.Length+index); j++)
             {
-                if (cfgCharArrray[i] != c)
+                if (prodLHSArray[i] != cfgCharArray[j])
                     return false;
-                i += 1;
+                i++;
             }
-
             return true;
         }
 
@@ -85,7 +86,7 @@ namespace ProductionSystem.ProductionOperations
 
             if (cfg is StringBuilder)
             {
-                for (int i = 0; i < cfg.Length - prod.LHS.Length; i++)
+                for (int i = 0; i <= cfg.Length - prod.LHS.Length; i++)
                 {
                     bool? canApply = canApplyProd(prod, cfg, i);
                     if (canApply is bool)
