@@ -113,7 +113,7 @@ namespace ProductionSystem.ProductionOperations
         public static List<(string LHS, string RHS, int Index)>? allApplicableProductions(List<(string LHS, string RHS)> prods,
                                                                                           StringBuilder? cfg)
         {
-            var ret_value = new List<(string LHS, string RHS, int Index)>();
+            var retValue = new List<(string LHS, string RHS, int Index)>();
             if (cfg is StringBuilder)
             {
                 foreach (var p in prods)
@@ -123,7 +123,7 @@ namespace ProductionSystem.ProductionOperations
                     {
                         foreach (var i in applicableIndicies)
                         {
-                            ret_value.Add((p.LHS, p.RHS, i));
+                            retValue.Add((p.LHS, p.RHS, i));
                         }
                     }
                 }
@@ -131,7 +131,7 @@ namespace ProductionSystem.ProductionOperations
             else
                 throw new CfgIsNullException();
 
-            return ret_value;
+            return retValue;
         }
     }
 }
