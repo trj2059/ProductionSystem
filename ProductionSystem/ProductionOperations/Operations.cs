@@ -82,7 +82,6 @@ namespace ProductionSystem.ProductionOperations
         /// <returns>A list of all applicable indicies the lhs can be applied to the cfg</returns>
         public static List<int>? getListOfApplicableIndices((string LHS, string RHS) prod, StringBuilder? cfg)
         {
-            // TODO : Finish getListOfApplicableIndices
             var ret_value = new List<int>();
 
             if (cfg is StringBuilder)
@@ -118,8 +117,7 @@ namespace ProductionSystem.ProductionOperations
             if (cfg is StringBuilder)
             {
                 foreach (var p in prods)
-                {
-                    // UNDONE: check if production is applicable to cfg
+                {                   
                     List<int>? applicableIndicies = getListOfApplicableIndices(p, cfg);
                     if (applicableIndicies is List<int>)
                     {
