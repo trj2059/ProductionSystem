@@ -82,7 +82,7 @@ namespace ProductionSystem.ProductionOperations
         /// <returns>A list of all applicable indicies the lhs can be applied to the cfg</returns>
         public static List<int>? getListOfApplicableIndices((string LHS, string RHS) prod, StringBuilder? cfg)
         {
-            var ret_value = new List<int>();
+            var retValue = new List<int>();
 
             if (cfg is StringBuilder)
             {
@@ -92,7 +92,7 @@ namespace ProductionSystem.ProductionOperations
                     if (canApply is bool)
                     {
                         if ((bool)canApply)
-                            ret_value.Add(i);
+                            retValue.Add(i);
                     }
                     else
                         throw new CanApplyProdoductionReturnedNullException();
@@ -101,7 +101,7 @@ namespace ProductionSystem.ProductionOperations
             else
                 throw new CfgIsNullException();
 
-            return ret_value;
+            return retValue;
         }
 
         /// <summary>
